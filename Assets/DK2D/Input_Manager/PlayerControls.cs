@@ -22,9 +22,41 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControls"",
-    ""maps"": [],
+    ""maps"": [
+        {
+            ""name"": ""Player_Inputs"",
+            ""id"": ""0071ead9-3f0f-41f3-936f-c30248d1dfe1"",
+            ""actions"": [
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""db57b7be-3b89-47f5-85e5-c4c122c935dc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4b527aff-d1ea-43be-9ced-9a3452f8a266"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        }
+    ],
     ""controlSchemes"": []
 }");
+        // Player_Inputs
+        m_Player_Inputs = asset.FindActionMap("Player_Inputs", throwIfNotFound: true);
+        m_Player_Inputs_Interact = m_Player_Inputs.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -81,5 +113,55 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+
+    // Player_Inputs
+    private readonly InputActionMap m_Player_Inputs;
+    private List<IPlayer_InputsActions> m_Player_InputsActionsCallbackInterfaces = new List<IPlayer_InputsActions>();
+    private readonly InputAction m_Player_Inputs_Interact;
+    public struct Player_InputsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Player_InputsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_Player_Inputs_Interact;
+        public InputActionMap Get() { return m_Wrapper.m_Player_Inputs; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Player_InputsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayer_InputsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Player_InputsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Player_InputsActionsCallbackInterfaces.Add(instance);
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+        }
+
+        private void UnregisterCallbacks(IPlayer_InputsActions instance)
+        {
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+        }
+
+        public void RemoveCallbacks(IPlayer_InputsActions instance)
+        {
+            if (m_Wrapper.m_Player_InputsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayer_InputsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Player_InputsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Player_InputsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Player_InputsActions @Player_Inputs => new Player_InputsActions(this);
+    public interface IPlayer_InputsActions
+    {
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
