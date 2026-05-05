@@ -14,6 +14,7 @@ namespace SoT.Player
             // creates the reference for the Input Action
             controls = new PlayerControls();
 
+            // Interaction controller (when interaction is performed, will trigger the Interaction function)
             controls.Player_Inputs.Interact.performed += ctx => Interact();
         }
 
