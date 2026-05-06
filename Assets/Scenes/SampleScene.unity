@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 1320249491}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1056,6 +1056,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputControls: {fileID: 300135325}
+  _ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 72
 --- !u!114 &1421075966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,7 +1084,7 @@ GameObject:
   - component: {fileID: 1687218292}
   m_Layer: 0
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
