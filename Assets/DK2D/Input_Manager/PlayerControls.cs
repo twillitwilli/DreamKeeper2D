@@ -44,6 +44,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwordAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4a62404f-3fb8-48ec-a326-ca13be9d6bab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec11ee2d-6137-45f1-8c4c-f13138f04886"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Inputs = asset.FindActionMap("Player_Inputs", throwIfNotFound: true);
         m_Player_Inputs_Interact = m_Player_Inputs.FindAction("Interact", throwIfNotFound: true);
         m_Player_Inputs_Movement = m_Player_Inputs.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Inputs_SwordAttack = m_Player_Inputs.FindAction("SwordAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,12 +206,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayer_InputsActions> m_Player_InputsActionsCallbackInterfaces = new List<IPlayer_InputsActions>();
     private readonly InputAction m_Player_Inputs_Interact;
     private readonly InputAction m_Player_Inputs_Movement;
+    private readonly InputAction m_Player_Inputs_SwordAttack;
     public struct Player_InputsActions
     {
         private @PlayerControls m_Wrapper;
         public Player_InputsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Interact => m_Wrapper.m_Player_Inputs_Interact;
         public InputAction @Movement => m_Wrapper.m_Player_Inputs_Movement;
+        public InputAction @SwordAttack => m_Wrapper.m_Player_Inputs_SwordAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player_Inputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -206,6 +229,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @SwordAttack.started += instance.OnSwordAttack;
+            @SwordAttack.performed += instance.OnSwordAttack;
+            @SwordAttack.canceled += instance.OnSwordAttack;
         }
 
         private void UnregisterCallbacks(IPlayer_InputsActions instance)
@@ -216,6 +242,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @SwordAttack.started -= instance.OnSwordAttack;
+            @SwordAttack.performed -= instance.OnSwordAttack;
+            @SwordAttack.canceled -= instance.OnSwordAttack;
         }
 
         public void RemoveCallbacks(IPlayer_InputsActions instance)
@@ -237,5 +266,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnInteract(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnSwordAttack(InputAction.CallbackContext context);
     }
 }

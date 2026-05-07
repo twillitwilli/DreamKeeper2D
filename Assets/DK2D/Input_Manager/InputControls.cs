@@ -9,6 +9,9 @@ public class InputControls : MonoBehaviour
 
     public Vector2 movement { get; private set; }
 
+    [SerializeField]
+    GameObject _playerSword;
+
     public void Awake()
     {
         // creates the reference for the Input Action
@@ -20,6 +23,9 @@ public class InputControls : MonoBehaviour
         // Movement controller
         controls.Player_Inputs.Movement.performed += ctx => movement = ctx.ReadValue<Vector2>();
         controls.Player_Inputs.Movement.canceled += ctx => movement = new Vector2(0, 0);
+
+        // Sword Attack controller
+        controls.Player_Inputs.SwordAttack.performed += ctx => SwordAttack();
     }
 
     private void OnEnable()
@@ -42,5 +48,12 @@ public class InputControls : MonoBehaviour
     void Interact()
     {
         Debug.Log("Player Interaction");
+    }
+
+    void SwordAttack()
+    {
+        // if sword isnt active, activates sword
+        if (!_playerSword.activeSelf)
+            _playerSword.SetActive(true);
     }
 }
