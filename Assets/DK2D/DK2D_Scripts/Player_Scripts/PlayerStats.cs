@@ -16,6 +16,7 @@ public class PlayerStats : MonoBehaviour
         _agilityCap = 100,
         _agilityNextLevelUp,
         _strengthCap = 100,
+        _strengthNextLevelUp,
         _magicCap = 10000,
         _intelligenceCap = 100;
 
@@ -24,6 +25,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         SetAgilityLevelUpExpReq();
+        SetStrengthLevelUpExpReq();
     }
 
     // ===================== HEALTH STAT ======================
@@ -167,6 +169,51 @@ public class PlayerStats : MonoBehaviour
     // ========================================================
 
     // ================== STRENGTH STAT =======================
+
+    public void StrengthExpIncrease(float exp)
+    {
+        // If player strength stat is not at max level
+        if (playerStats.strength < 100)
+        {
+            // add exp gained to strength exp
+            playerStats.strengthExp += exp;
+
+            // if strength exp equals next level up requirement, level up strength
+            if (playerStats.strengthExp >= _strengthNextLevelUp)
+            {
+                Debug.Log("Strength Level Up");
+
+                // extra exp variable
+                float extraExp = 0;
+
+                // get extra exp to transfer before level up
+                if (playerStats.strengthExp >  _strengthNextLevelUp)
+                    extraExp = playerStats.strengthExp - _strengthNextLevelUp;
+
+                // reset player strength exp
+                playerStats.strengthExp = 0;
+
+                // increase strength level by 1
+                playerStats.strength++;
+
+                // increase requirement for next level up
+                SetStrengthLevelUpExpReq();
+
+                // transfer remaining exp from previous level to new level
+                playerStats.strengthExp += extraExp;
+
+                // limits player max stregth level
+                if (playerStats.strength >= _strengthCap)
+                    playerStats.strength = 100;
+            }
+        }
+    }
+
+    void SetStrengthLevelUpExpReq()
+    {
+        // scales how much exp is needed for next level up
+        _strengthNextLevelUp = 25 * Mathf.Pow(playerStats.strength, 2);
+    }
 
     // ========================================================
 }
