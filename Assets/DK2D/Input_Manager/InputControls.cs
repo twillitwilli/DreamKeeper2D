@@ -10,6 +10,9 @@ public class InputControls : MonoBehaviour
     public Vector2 movement { get; private set; }
 
     [SerializeField]
+    PlayerController _player;
+
+    [SerializeField]
     GameObject _playerSword;
 
     public void Awake()
@@ -26,6 +29,9 @@ public class InputControls : MonoBehaviour
 
         // Sword Attack controller
         controls.Player_Inputs.SwordAttack.performed += ctx => SwordAttack();
+
+        // Use Item controller
+        controls.Player_Inputs.UseItem.performed += ctx => UseItem();
     }
 
     private void OnEnable()
@@ -48,6 +54,13 @@ public class InputControls : MonoBehaviour
     void Interact()
     {
         Debug.Log("Player Interaction");
+
+        // checks if player interaction trigger can interact with something
+        if (_player.interactionTrigger.CanInteract)
+        {
+            // player interacts with interactable
+            _player.interactionTrigger.Interact();
+        }
     }
 
     void SwordAttack()
@@ -55,5 +68,10 @@ public class InputControls : MonoBehaviour
         // if sword isnt active, activates sword
         if (!_playerSword.activeSelf)
             _playerSword.SetActive(true);
+    }
+
+    void UseItem()
+    {
+        Debug.Log("Use Item");
     }
 }
