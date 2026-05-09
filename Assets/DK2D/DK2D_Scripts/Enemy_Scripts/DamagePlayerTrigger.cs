@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamagePlayerTrigger : MonoBehaviour
+public class DamagePlayerTrigger : PlayerEnterExitTrigger
 {
     [SerializeField]
     float damageAmount;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void PlayerEnteredTrigger(PlayerController player)
     {
-        PlayerController player;
-        if (collision.TryGetComponent<PlayerController>(out player))
-        {
-            // damages player if the player enters the trigger
-            player.stats.AdjustHealth(-damageAmount);
-        }
+        // damages player if the player enters the trigger
+        player.stats.AdjustHealth(-damageAmount);
     }
 }

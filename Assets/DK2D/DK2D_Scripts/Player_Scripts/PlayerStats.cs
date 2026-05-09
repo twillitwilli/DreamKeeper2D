@@ -64,6 +64,8 @@ public class PlayerStats : MonoBehaviour
     void Death()
     {
         Debug.Log("Player Died");
+
+        Destroy(_player.gameObject);
     }
 
     public void MaxHealthUpgrade()
