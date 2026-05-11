@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerAnimations;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +13,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] LayerMask _ignoreLayers;
 
+    [SerializeField]
+    PlayerAnimations _playerAnimations;
+
     PlayerController _playerController;
+
+    PlayerAnimations.FacingDirection previousFacingDirection = FacingDirection.N;
 
     private void Start()
     {
@@ -30,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void Movement()
     {
         // Movement input from the input controls
-        Vector2 movementInput = _inputControls.movement;
+        Vector2 movementInput = Get8Direction(_inputControls.movement);
 
         // Player Not Moving
         if (movementInput == Vector2.zero)
@@ -81,6 +87,56 @@ public class PlayerMovement : MonoBehaviour
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position, transform.position + transform.up * 0.6f);
     //}
+
+    Vector2 Get8Direction(Vector2 input)
+    {
+        // player not moving
+        if (input == Vector2.zero)
+            return Vector2.zero;
+
+        // normalize the input so all directions have consistent magnitude
+        input.Normalize();
+
+        // gets the angle of the input direction
+        // atan2 returns radians, to convert to degrees
+        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+
+        // Snap to nearest 45 degrees
+        float snappedAngle = Mathf.Round(angle / 45f) * 45f;
+
+        // Sets the current animation state direction
+        _playerAnimations.currentFacingDirection = WhichDirection((int)snappedAngle);
+
+        // Changes animation
+        if (_playerAnimations.currentFacingDirection != previousFacingDirection)
+        {
+            _playerAnimations.SetAnimation();
+            previousFacingDirection = _playerAnimations.currentFacingDirection;
+        }
+
+        // convert the snapped angle back to radians
+        float rad = snappedAngle * Mathf.Deg2Rad;
+
+        return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+    }
+
+    PlayerAnimations.FacingDirection WhichDirection(int snappedAngle)
+    {
+        switch (snappedAngle)
+        {
+            case 0: return FacingDirection.E;
+            case 45: return FacingDirection.NE;
+            case 90: return FacingDirection.N;
+            case 135: return FacingDirection.NW;
+            case 180:
+            case -180: return FacingDirection.W;
+            case -135: return FacingDirection.SW;
+            case -90: return FacingDirection.S;
+            case -45: return FacingDirection.SE;
+        }
+
+        return _playerAnimations.currentFacingDirection;
+    }
 
     public void SetPlayerSpeed()
     {

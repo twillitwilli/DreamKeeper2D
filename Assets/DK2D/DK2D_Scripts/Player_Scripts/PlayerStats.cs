@@ -22,8 +22,13 @@ public class PlayerStats : MonoBehaviour
 
     public PlayerStatsData playerStats;
 
+    UI_Manager _UIManager;
+
     private void Start()
     {
+        // gets reference to UI Manager
+        _UIManager = UI_Manager.Instance;
+
         SetAgilityLevelUpExpReq();
         SetStrengthLevelUpExpReq();
     }
@@ -59,6 +64,8 @@ public class PlayerStats : MonoBehaviour
             if (playerStats.health > playerStats.maxHealth)
                 playerStats.health = playerStats.maxHealth;
         }
+
+        UpdateHealthDisplay();
     }
 
     void Death()
@@ -78,6 +85,21 @@ public class PlayerStats : MonoBehaviour
         // Limit Player Max Health
         if (playerStats.maxHealth > _healthCap)
             playerStats.maxHealth = _healthCap;
+
+        AdjustHealth(250);
+    }
+
+    void UpdateHealthDisplay()
+    {
+        // gets current health percent
+        float currentHealthPercent = 100 * (playerStats.health / playerStats.maxHealth);
+
+        int currentHealth = (int)playerStats.health;
+        int currentMaxHealth = (int)playerStats.maxHealth;
+
+        string healthDisplay = currentHealth.ToString() + "/" + currentMaxHealth.ToString();
+
+        _UIManager.healthBar.SetAnimationFrame(currentHealthPercent, healthDisplay);
     }
 
     // ========================================================

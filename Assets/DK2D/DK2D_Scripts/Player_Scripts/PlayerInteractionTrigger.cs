@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerInteractionTrigger : MonoBehaviour
 {
     public bool CanInteract {  get; private set; }
-
     public TreasureChest Chest {  get; private set; }
     public NPC interactableNPC { get; private set; }
 
