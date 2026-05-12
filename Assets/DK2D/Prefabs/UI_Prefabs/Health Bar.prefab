@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3002999821348894192}
   - component: {fileID: 9166672345542380058}
   m_Layer: 5
-  m_Name: Current Health Text
+  m_Name: TextDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 1263597826271181193}
   - component: {fileID: 8819364543906077551}
   m_Layer: 5
-  m_Name: Current Health
+  m_Name: BarValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

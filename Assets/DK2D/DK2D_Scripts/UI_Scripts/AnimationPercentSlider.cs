@@ -30,8 +30,11 @@ public class AnimationPercentSlider : MonoBehaviour
 
     public void SetAnimationFrame(float percent, string displayText = "No Text Found")
     {
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
+
         // Converts 0-100 into 0-1
-        float normalizedTime = percent / 100f;
+        float normalizedTime = percent / 101f;
 
         // Plays the animation at that exact frame/time
         _animator.Play("PercentageSlider", 0, -normalizedTime);

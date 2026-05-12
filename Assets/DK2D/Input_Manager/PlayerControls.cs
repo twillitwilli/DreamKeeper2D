@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9584610f-3398-49dc-aad9-84b14b7dd4d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff79d2fa-949f-45a7-9178-362836b5fbe0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3874afb-cdf0-4d7a-bf9f-be1540ef7cb6"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +239,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Inputs_Movement = m_Player_Inputs.FindAction("Movement", throwIfNotFound: true);
         m_Player_Inputs_SwordAttack = m_Player_Inputs.FindAction("SwordAttack", throwIfNotFound: true);
         m_Player_Inputs_UseItem = m_Player_Inputs.FindAction("UseItem", throwIfNotFound: true);
+        m_Player_Inputs_Menu = m_Player_Inputs.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +305,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inputs_Movement;
     private readonly InputAction m_Player_Inputs_SwordAttack;
     private readonly InputAction m_Player_Inputs_UseItem;
+    private readonly InputAction m_Player_Inputs_Menu;
     public struct Player_InputsActions
     {
         private @PlayerControls m_Wrapper;
@@ -281,6 +314,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Inputs_Movement;
         public InputAction @SwordAttack => m_Wrapper.m_Player_Inputs_SwordAttack;
         public InputAction @UseItem => m_Wrapper.m_Player_Inputs_UseItem;
+        public InputAction @Menu => m_Wrapper.m_Player_Inputs_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Player_Inputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +336,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IPlayer_InputsActions instance)
@@ -318,6 +355,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IPlayer_InputsActions instance)
@@ -341,5 +381,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnSwordAttack(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

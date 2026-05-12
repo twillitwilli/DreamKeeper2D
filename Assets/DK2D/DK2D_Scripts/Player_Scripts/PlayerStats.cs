@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
     PlayerController _player;
+
+    [SerializeField]
+    SpriteRenderer _playerSprite;
+
+    Color _playerDefaultColor;
 
     float _healthCap = 10000;
 
@@ -18,7 +24,8 @@ public class PlayerStats : MonoBehaviour
         _strengthCap = 100,
         _strengthNextLevelUp,
         _magicCap = 10000,
-        _intelligenceCap = 100;
+        _intelligenceCap = 100,
+        _intelligenceNextLevelUp = 100;
 
     public PlayerStatsData playerStats;
 
@@ -26,20 +33,29 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        // sets players default sprite color
+        _playerDefaultColor = _playerSprite.color;
+
         // gets reference to UI Manager
         _UIManager = UI_Manager.Instance;
 
         SetAgilityLevelUpExpReq();
         SetStrengthLevelUpExpReq();
+        SetIntelligenceLevelUpExpReq();
+
+        UpdateAllDisplays();
     }
 
     // ===================== HEALTH STAT ======================
 
-    public void AdjustHealth(float adjustmentValue)
+    public async Task AdjustHealth(float adjustmentValue)
     {
         // Damage Taken
         if (adjustmentValue < 0)
         {
+            // Changes color of player sprite red when hurt
+            _playerSprite.color = Color.red;
+
             Debug.Log("Player Damaged");
 
             // Damage Player
@@ -49,6 +65,14 @@ public class PlayerStats : MonoBehaviour
             if (playerStats.health <= 0)
             {
                 Death();
+            }
+
+            else
+            {
+                // delay before returning player to default color
+                await Task.Delay(100);
+
+                _playerSprite.color = _playerDefaultColor;
             }
         }
 
@@ -94,10 +118,13 @@ public class PlayerStats : MonoBehaviour
         // gets current health percent
         float currentHealthPercent = 100 * (playerStats.health / playerStats.maxHealth);
 
+        // sets current value to int
         int currentHealth = (int)playerStats.health;
+        // sets max value to int
         int currentMaxHealth = (int)playerStats.maxHealth;
 
-        string healthDisplay = currentHealth.ToString() + "/" + currentMaxHealth.ToString();
+        // string display for the text display
+        string healthDisplay = currentHealth + "/" + currentMaxHealth;
 
         _UIManager.healthBar.SetAnimationFrame(currentHealthPercent, healthDisplay);
     }
@@ -114,6 +141,8 @@ public class PlayerStats : MonoBehaviour
         // Limit Player Current Gold
         if (playerStats.gold > playerStats.maxGold)
             playerStats.gold = playerStats.maxGold;
+
+        UpdateGoldDisplay();
     }
 
     public void GoldUsed(int goldPrice)
@@ -124,6 +153,8 @@ public class PlayerStats : MonoBehaviour
         // Limits gold amount to 0
         if (playerStats.gold <= 0)
             playerStats.gold = 0;
+
+        UpdateGoldDisplay();
     }
 
     public void MaxGoldUpgrade()
@@ -134,6 +165,11 @@ public class PlayerStats : MonoBehaviour
         // Limit Player Max Gold 
         if (playerStats.maxGold > _goldCap)
             playerStats.maxGold = _goldCap;
+    }
+
+    void UpdateGoldDisplay()
+    {
+        _UIManager.goldTextDisplay.text = playerStats.gold.ToString();
     }
 
     // ========================================================
@@ -182,12 +218,30 @@ public class PlayerStats : MonoBehaviour
                     playerStats.agility = 100;
             }
         }
+
+        UpdateAgilityDisplay();
     }
 
     void SetAgilityLevelUpExpReq()
     {
         // scales how much exp is needed for next level up
         _agilityNextLevelUp = 100 * Mathf.Pow(playerStats.agility, 2);
+    }
+
+    void UpdateAgilityDisplay()
+    {
+        // gets current percent
+        int currentAgilityPercent = (int)(100 * (playerStats.agilityExp / _agilityNextLevelUp));
+
+        // sets current value to int
+        int currentExp = (int)playerStats.agilityExp;
+        // sets max value to int
+        int neededExp = (int)_agilityNextLevelUp;
+
+        // string display for the text display
+        string agilityDisplay = "Agility Level " + playerStats.agility.ToString() + "\n" + currentAgilityPercent.ToString() + "%";
+
+        _UIManager.agilityBar.SetAnimationFrame(currentAgilityPercent, agilityDisplay);
     }
 
     // ========================================================
@@ -231,6 +285,8 @@ public class PlayerStats : MonoBehaviour
                     playerStats.strength = 100;
             }
         }
+
+        UpdateStrengthDisplay();
     }
 
     void SetStrengthLevelUpExpReq()
@@ -239,5 +295,118 @@ public class PlayerStats : MonoBehaviour
         _strengthNextLevelUp = 25 * Mathf.Pow(playerStats.strength, 2);
     }
 
+    void UpdateStrengthDisplay()
+    {
+        // gets current percent
+        int currentStrengthPercent = (int)(100 * (playerStats.strengthExp / _strengthNextLevelUp));
+
+        // sets current value to int
+        int currentExp = (int)playerStats.strengthExp;
+        // sets max value to int
+        int neededExp = (int)_strengthNextLevelUp;
+
+        // string display for the text display
+        string strengthDisplay = "Strength Level " + playerStats.strength + "\n" + currentStrengthPercent + "%";
+
+        _UIManager.strengthBar.SetAnimationFrame(currentStrengthPercent, strengthDisplay);
+    }
+
     // ========================================================
+
+    // ==================== MAGIC STAT ========================
+
+    void UpdateMagicDisplay()
+    {
+        // gets current percent
+        float currentMagicPercent = 100 * (playerStats.magic / playerStats.maxMagic);
+
+        // sets current value to int
+        int currentMagic = (int)playerStats.magic;
+        // sets max value to int
+        int maxMagic = (int)playerStats.maxMagic;
+
+        // string display for the text display
+        string magicDisplay = currentMagic + "/" + maxMagic;
+
+        _UIManager.magicBar.SetAnimationFrame(currentMagicPercent, magicDisplay);
+    }
+
+    // ========================================================
+
+    // ================ INTELLIGENCE STAT =====================
+
+    public void IntelligenceExpIncrease(float exp)
+    {
+        // If player strength stat is not at max level
+        if (playerStats.intelligence < 100)
+        {
+            // add exp gained to strength exp
+            playerStats.intelligenceExp += exp;
+
+            // if strength exp equals next level up requirement, level up strength
+            if (playerStats.intelligenceExp >= _intelligenceNextLevelUp)
+            {
+                Debug.Log("Intelligence Level Up");
+
+                // extra exp variable
+                float extraExp = 0;
+
+                // get extra exp to transfer before level up
+                if (playerStats.intelligenceExp > _intelligenceNextLevelUp)
+                    extraExp = playerStats.intelligenceExp - _intelligenceNextLevelUp;
+
+                // reset player strength exp
+                playerStats.intelligenceExp = 0;
+
+                // increase strength level by 1
+                playerStats.intelligence++;
+
+                // increase requirement for next level up
+                SetIntelligenceLevelUpExpReq();
+
+                // transfer remaining exp from previous level to new level
+                playerStats.intelligenceExp += extraExp;
+
+                // limits player max stregth level
+                if (playerStats.intelligence >= _intelligenceCap)
+                    playerStats.intelligence = 100;
+            }
+        }
+
+        UpdateIntelligenceDisplay();
+    }
+
+    void SetIntelligenceLevelUpExpReq()
+    {
+        // scales how much exp is needed for next level up
+        _intelligenceNextLevelUp = 25 * Mathf.Pow(playerStats.intelligence, 2);
+    }
+
+    void UpdateIntelligenceDisplay()
+    {
+        // gets current percent
+        int currentIntelligencePercent = (int)(100 * (playerStats.intelligenceExp / _intelligenceNextLevelUp));
+
+        // sets current value to int
+        int currentExp = (int)playerStats.intelligenceExp;
+        // sets max value to int
+        int neededExp = (int)_intelligenceNextLevelUp;
+
+        // string display for the text display
+        string intelligenceDisplay = "Intelligence Level " + playerStats.intelligence + "\n" + currentIntelligencePercent + "%";
+
+        _UIManager.intelligenceBar.SetAnimationFrame(currentIntelligencePercent, intelligenceDisplay);
+    }
+
+    // ========================================================
+
+    public void UpdateAllDisplays()
+    {
+        UpdateHealthDisplay();
+        UpdateGoldDisplay();
+        UpdateAgilityDisplay();
+        UpdateStrengthDisplay();
+        UpdateMagicDisplay();
+        UpdateIntelligenceDisplay();
+    }    
 }

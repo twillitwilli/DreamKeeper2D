@@ -638,6 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 5271872123799725328}
+  _playerSprite: {fileID: 0}
   playerStats:
     playerName: Zemmi
     health: 1000

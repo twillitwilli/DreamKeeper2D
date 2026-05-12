@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ public class InputControls : MonoBehaviour
 
     [SerializeField]
     GameObject _playerSword;
+
+    UI_Manager _UIManager;
 
     public void Awake()
     {
@@ -32,6 +35,9 @@ public class InputControls : MonoBehaviour
 
         // Use Item controller
         controls.Player_Inputs.UseItem.performed += ctx => UseItem();
+
+        // Toggle Menu Controller
+        controls.Player_Inputs.Menu.performed += ctx => ToggleMenu();
     }
 
     private void OnEnable()
@@ -44,6 +50,11 @@ public class InputControls : MonoBehaviour
     {
         // disables the controls when this object is disabled
         controls.Disable();
+    }
+
+    private void Start()
+    {
+        _UIManager = UI_Manager.Instance;
     }
 
     private void Update()
@@ -73,5 +84,30 @@ public class InputControls : MonoBehaviour
     void UseItem()
     {
         Debug.Log("Use Item");
+    }
+
+    async void ToggleMenu()
+    {
+        // Toggles Menu On and Pauses Game
+        if (!_UIManager.menu.activeSelf)
+        {
+            _UIManager.menu.SetActive(true);
+
+            // small delay before updating displays
+            await Task.Delay(10);
+
+            // Refreshes all UI Displays
+            _player.stats.UpdateAllDisplays();
+
+            Debug.Log("Pause Game");
+        }
+
+        // Toggles Menu Off and Unpauses Game
+        else
+        {
+            _UIManager.menu.SetActive(false);
+
+            Debug.Log("Unpause Game");
+        }
     }
 }

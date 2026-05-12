@@ -6,6 +6,8 @@ using TMPro;
 
 public class UI_Manager : MonoSingleton<UI_Manager>
 {
+    public GameObject menu;
+
     public AnimationPercentSlider
         healthBar,
         magicBar,
