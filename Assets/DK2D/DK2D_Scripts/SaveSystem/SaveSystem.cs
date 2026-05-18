@@ -25,14 +25,14 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
         _statsData = _playerStats.playerStats;
     }
 
-    public void SaveGame(int saveFile)
+    public void SaveGame()
     {
-        BinarySaveSystem.SaveData(CreateSaveData(), saveFile);
+        BinarySaveSystem.SaveData(CreateSaveData());
     }
 
-    public void LoadGame(int saveFile)
+    public void LoadGame()
     {
-        BinarySaveData loadedData = BinarySaveSystem.LoadData(saveFile);
+        BinarySaveData loadedData = BinarySaveSystem.LoadData();
 
         // checkes if there is a save file to load
         if (loadedData != null)
@@ -41,9 +41,9 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
         else Debug.Log("No Save File Found");
     }
 
-    public void DeleteSaveFile(int saveFile)
+    public void DeleteSaveFile()
     {
-        BinarySaveSystem.DeleteFileSave(saveFile);
+        BinarySaveSystem.DeleteFileSave();
     }
 
     // ========= Creates Save File ============
@@ -52,9 +52,6 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
     {
         // creates new save data file
         BinarySaveData newData = new BinarySaveData();
-
-        // sets save file
-        newData.saveFile = _gameManager.saveFile;
 
         // Sets player stats data
         newData.playerStats = _statsData;
@@ -66,8 +63,6 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
 
     private void LoadSavedData(BinarySaveData loadedData)
     {
-        _gameManager.saveFile = loadedData.saveFile;
-
         _statsData = loadedData.playerStats;
     }
 }

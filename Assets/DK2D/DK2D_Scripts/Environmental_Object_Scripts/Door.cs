@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Door : MonoBehaviour
+{
+    [SerializeField]
+    bool _doorIsLocked;
+
+    [SerializeField]
+    Transform _movePlayerToLocation;
+
+    [SerializeField]
+    GameObject[]
+        _disbleObjects,
+        _enableObjects;
+
+    public void OpenDoor(PlayerController player)
+    {
+        if (_doorIsLocked)
+            Debug.Log("Door is locked");
+
+        else
+        {
+            // enable and disable objects
+            RenderObjects();
+
+            // move player to other side of door
+            player.transform.position = _movePlayerToLocation.position;
+        }
+            
+    }
+
+    public void UnlockDoor()
+    {
+        // unlocks door
+        _doorIsLocked = false;
+    }
+
+    void RenderObjects()
+    {
+        // disable all objects 
+        if ( _disbleObjects.Length > 0 )
+        {
+            for (int i = 0;  i < _disbleObjects.Length; i++)
+            {
+                _disbleObjects[i].SetActive(false);
+            }
+        }
+
+        // enable all objects
+        if ( _enableObjects.Length > 0 )
+        {
+            for (int i = 0; i < _enableObjects.Length; i++)
+            {
+                _enableObjects[i].SetActive(true);
+            }
+        }
+    }
+}

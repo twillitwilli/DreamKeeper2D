@@ -66,8 +66,12 @@ public class InputControls : MonoBehaviour
     {
         Debug.Log("Player Interaction");
 
+        // if item obtained description is open will clear item desription
+        if (_UIManager.itemObtained != null)
+            _UIManager.itemObtained.ClearItemDesription();
+
         // checks if player interaction trigger can interact with something
-        if (_player.interactionTrigger.CanInteract)
+        if (_player.interactionTrigger.currentInteractable != PlayerInteractionTrigger.Interactables.none)
         {
             // player interacts with interactable
             _player.interactionTrigger.Interact();

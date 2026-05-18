@@ -4,9 +4,26 @@ using UnityEngine;
 
 public class PlayerInteractionTrigger : MonoBehaviour
 {
-    public bool CanInteract {  get; private set; }
+    PlayerController _player;
+
+    public enum Interactables
+    {
+        none,
+        chest,
+        NPC,
+        door
+    }
+
+    public Interactables currentInteractable;
+
     public TreasureChest Chest {  get; private set; }
     public NPC interactableNPC { get; private set; }
+    public Door interactableDoor {  get; private set; }
+
+    private void Start()
+    {
+        _player = PlayerController.Instance;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,8 +33,8 @@ public class PlayerInteractionTrigger : MonoBehaviour
             // sets reference to chest if one if found
             Chest = chest;
 
-            // sets can interact trigger on
-            CanInteract = true;
+            // sets current interactable to chest
+            currentInteractable = Interactables.chest;
         }
 
         NPC npc;
@@ -26,8 +43,18 @@ public class PlayerInteractionTrigger : MonoBehaviour
             // sets reference to NPC
             interactableNPC = npc;
 
-            // sets can interact trigger on
-            CanInteract = true;
+            // sets current interactable to NPC
+            currentInteractable = Interactables.NPC;
+        }
+
+        Door door;
+        if (collision.TryGetComponent<Door>(out door))
+        {
+            // sets reference to door
+            door = interactableDoor;
+
+            // sets current interactable to door
+            currentInteractable = Interactables.door;
         }
     }
 
@@ -46,35 +73,60 @@ public class PlayerInteractionTrigger : MonoBehaviour
             // Clears the trigger data
             ClearTriggerData();
         }
+
+        Door door;
+        if (interactableDoor != null && collision.TryGetComponent<Door>(out door))
+        {
+            // Clears the trigger data
+            ClearTriggerData();
+        }
     }
 
     public void Interact()
     {
-        if (Chest !=null)
+        switch (currentInteractable)
         {
-            // Opens chest
-            Chest.OpenChest();
+            case Interactables.chest:
 
-            // Clear trigger data
-            ClearTriggerData();
-        }
+                // Opens chest
+                Chest.OpenChest();
 
-        else if (interactableNPC != null)
-        {
-            // Talk to NPC
-            interactableNPC.InteractWithNPC();
+                // Clear trigger data
+                ClearTriggerData();
+
+                break;
+
+            case Interactables.NPC:
+
+                // Talk to NPC
+                interactableNPC.InteractWithNPC();
+
+                break;
+
+            case Interactables.door:
+
+                // Opens door
+                interactableDoor.OpenDoor(_player);
+
+                // Clear trigger data
+                ClearTriggerData();
+
+                break;
         }
     }
 
     void ClearTriggerData()
     {
-        // cant interact with anything
-        CanInteract = false;
+        // sets current interactable to none
+        currentInteractable = Interactables.none;
 
         // clears chest data from trigger
         Chest = null;
 
         // clears npc data from trigger
         interactableNPC = null;
+
+        // clears door data from trigger
+        interactableDoor = null;
     }
 }

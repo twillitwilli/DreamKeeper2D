@@ -10,6 +10,10 @@ public class LoadScene : MonoBehaviour
 
     public void SceneLoader()
     {
+        if (PlayerController.Instance == null)
+            GameManager.Instance.SpawnPlayer();
+
+        // changes the scene to the selected scene
         SceneManager.LoadScene(SceneSelector.GetScene(sceneName));
     }
 }

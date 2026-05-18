@@ -17,4 +17,6 @@ public class UI_Manager : MonoSingleton<UI_Manager>
 
     public TMP_Text
         goldTextDisplay;
+
+    public ItemObtained itemObtained {  get; set; }
 }

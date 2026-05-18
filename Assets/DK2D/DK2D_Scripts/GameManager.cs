@@ -5,5 +5,17 @@ using SoT.AbstractClasses;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public int saveFile;
+    [SerializeField]
+    GameObject _playerPrefab;
+
+    public int sceneSpawnLocation {  get; set; }
+
+    public BinaryPlayerSaveLoad saveSystem;
+
+    public void SpawnPlayer()
+    {
+        Instantiate(_playerPrefab);
+
+        saveSystem.SetReferences();
+    }
 }
