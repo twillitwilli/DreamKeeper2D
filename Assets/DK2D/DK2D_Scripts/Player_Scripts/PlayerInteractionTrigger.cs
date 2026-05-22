@@ -51,7 +51,7 @@ public class PlayerInteractionTrigger : MonoBehaviour
         if (collision.TryGetComponent<Door>(out door))
         {
             // sets reference to door
-            door = interactableDoor;
+            interactableDoor = door;
 
             // sets current interactable to door
             currentInteractable = Interactables.door;
@@ -105,6 +105,7 @@ public class PlayerInteractionTrigger : MonoBehaviour
 
             case Interactables.door:
 
+                Debug.Log("found door = " + interactableDoor);
                 // Opens door
                 interactableDoor.OpenDoor(_player);
 
