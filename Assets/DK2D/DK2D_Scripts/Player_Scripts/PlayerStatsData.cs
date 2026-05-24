@@ -3,10 +3,14 @@ public class PlayerStatsData
 {
     public string playerName;
 
+    public bool dreamState;
+
     public float
         // Health
         health,
-        maxHealth;
+        maxHealth,
+        spiritHealth,
+        maxSpiritHealth;
 
     public int
         // Gold

@@ -1,23 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SoT.AbstractClasses;
 
-public class SceneSpawnLocations : MonoSingleton<SceneSpawnLocations>
+public class SceneSpawnLocations : MonoBehaviour
 {
-    public Transform[] spawnLocations;
+    public SpawnLocationData[] spawnLocations;
 
-    public GameObject[] renderedObjects;
+    GameManager _gameManager;
+
+    private void Awake()
+    {
+        // sets reference to game manager
+        _gameManager = GameManager.Instance;
+    }
 
     private void Start()
     {
-        // get loading index
-        int loadIndex = GameManager.Instance.sceneSpawnLocation;
+        // sets reference to player
+        PlayerController player = PlayerController.Instance;
 
-        // render objects during load
-        renderedObjects[loadIndex].SetActive(true);
+        // moves player to spawn location
+        player.transform.position = spawnLocations[_gameManager.sceneSpawnLocation].spawnPosition.position;
 
-        // moves player to scene spawn location
-        PlayerController.Instance.transform.position = spawnLocations[loadIndex].position;
+        // render objects into scene
+        RenderObjects();
+
+        // disable objects from scene
+        DisableObjects();
+    }
+
+    void RenderObjects()
+    {
+        
+    }
+
+    void DisableObjects()
+    {
+
     }
 }

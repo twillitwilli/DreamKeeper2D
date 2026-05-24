@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
-    [SerializeField]
-    SceneSelector.SceneName sceneName;
+    public SceneSelector.SceneName sceneName;
 
     public void SceneLoader()
     {
         // changes the scene to the selected scene
         SceneManager.LoadScene(SceneSelector.GetScene(sceneName));
+
+        // check player dream state
+        GameManager.Instance.CheckPlayerDreamState();
     }
 }

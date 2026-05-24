@@ -8,6 +8,8 @@ public class UI_Manager : MonoSingleton<UI_Manager>
 {
     public GameObject menu;
 
+    public SwitchHealthBar healthBarSwitch;
+
     public AnimationPercentSlider
         healthBar,
         magicBar,

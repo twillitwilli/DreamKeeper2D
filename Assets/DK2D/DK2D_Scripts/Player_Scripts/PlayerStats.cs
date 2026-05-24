@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    bool _playedDead;
+
     [SerializeField]
     PlayerController _player;
 
     [SerializeField]
     SpriteRenderer _playerSprite;
+
+    [SerializeField]
+    UI_Manager _UIManager;
 
     Color _playerDefaultColor;
 
@@ -21,15 +26,15 @@ public class PlayerStats : MonoBehaviour
         _playerStep,
         _agilityCap = 100,
         _agilityNextLevelUp,
+
         _strengthCap = 100,
         _strengthNextLevelUp,
+
         _magicCap = 10000,
         _intelligenceCap = 100,
         _intelligenceNextLevelUp = 100;
 
     public PlayerStatsData playerStats;
-
-    UI_Manager _UIManager;
 
     private void Start()
     {
@@ -48,55 +53,153 @@ public class PlayerStats : MonoBehaviour
 
     // ===================== HEALTH STAT ======================
 
-    public async Task AdjustHealth(float adjustmentValue)
+    public async void SwitchHealthDisplays()
     {
-        // Damage Taken
-        if (adjustmentValue < 0)
+        // set health display to dream state
+        if (playerStats.dreamState)
         {
-            // Changes color of player sprite red when hurt
-            _playerSprite.color = Color.red;
+            // changes color of health bar
+            _UIManager.healthBarSwitch.SpiritHealthBar();
 
-            Debug.Log("Player Damaged");
+            // delay before updating further
+            await Task.Delay(500);
 
-            // Damage Player
-            playerStats.health += adjustmentValue;
-
-            // If Player Health falls to zero, player dies
-            if (playerStats.health <= 0)
-            {
-                Death();
-            }
-
-            else
-            {
-                // delay before returning player to default color
-                await Task.Delay(100);
-
-                _playerSprite.color = _playerDefaultColor;
-            }
+            // update current display number
+            UpdateHealthDisplay(playerStats.spiritHealth, playerStats.maxSpiritHealth);
         }
 
-        // Heal
+        // set health display to normal
         else
         {
-            Debug.Log("Player Healed");
+            // changes color of health bar
+            _UIManager.healthBarSwitch.NormalHealthBar();
 
-            // Heal Player Health
-            playerStats.health += adjustmentValue;
+            // delay before updating further
+            await Task.Delay(500);
 
-            // Limit Player Current Health
-            if (playerStats.health > playerStats.maxHealth)
-                playerStats.health = playerStats.maxHealth;
+            // update current display number
+            UpdateHealthDisplay(playerStats.health, playerStats.maxHealth);
+        }
+    }
+
+    public async Task AdjustHealth(float adjustmentValue)
+    {
+        // checks to make sure player is not dead
+        if (!_playedDead && !playerStats.dreamState)
+        {
+            // Damage Taken
+            if (adjustmentValue < 0)
+            {
+                // Changes color of player sprite red when hurt
+                _playerSprite.color = Color.red;
+
+                Debug.Log("Player Damaged");
+
+                // Damage Player
+                playerStats.health += adjustmentValue;
+
+                // If Player Health falls to zero, player dies
+                if (playerStats.health <= 0)
+                {
+                    Death();
+                }
+
+                else
+                {
+                    // delay before returning player to default color
+                    await Task.Delay(100);
+
+                    _playerSprite.color = _playerDefaultColor;
+                }
+            }
+
+            // Heal
+            else
+            {
+                Debug.Log("Player Healed");
+
+                // Heal Player Health
+                playerStats.health += adjustmentValue;
+
+                // Limit Player Current Health
+                if (playerStats.health > playerStats.maxHealth)
+                    playerStats.health = playerStats.maxHealth;
+            }
+
+            UpdateHealthDisplay(playerStats.health, playerStats.maxHealth);
         }
 
-        UpdateHealthDisplay();
+        // ----------------- Spirit Health Adjustments -------------------
+
+        else if (playerStats.dreamState)
+        {
+            // Damage Taken
+            if (adjustmentValue < 0)
+            {
+                // Changes color of player sprite red when hurt
+                _playerSprite.color = Color.red;
+
+                Debug.Log("Player Damaged");
+
+                // Damage Player
+                playerStats.spiritHealth += adjustmentValue;
+
+                // If Player Health falls to zero, player dies
+                if (playerStats.spiritHealth <= 0)
+                {
+                    DreamDeath();
+
+                    return;
+                }
+
+                else
+                {
+                    // delay before returning player to default color
+                    await Task.Delay(100);
+
+                    _playerSprite.color = _playerDefaultColor;
+                }
+            }
+
+            // Heal
+            else
+            {
+                Debug.Log("Player Healed");
+
+                // Heal Player Health
+                playerStats.spiritHealth += adjustmentValue;
+
+                // Limit Player Current Health
+                if (playerStats.spiritHealth > playerStats.maxSpiritHealth)
+                    playerStats.spiritHealth = playerStats.maxSpiritHealth;
+            }
+
+            UpdateHealthDisplay(playerStats.spiritHealth, playerStats.maxSpiritHealth);
+        }
     }
 
     void Death()
     {
         Debug.Log("Player Died");
 
-        Destroy(_player.gameObject);
+        // sets player to dead
+        _playedDead = true;
+
+        // lock player movement
+        _player.movement.lockMovement = true;
+
+        // turn on game over screen
+        GameManager.Instance.gameOver.gameObject.SetActive(true);
+    }
+
+    void DreamDeath()
+    {
+        Debug.Log("Player Died In Dream & Wakes Up");
+
+        // locks player movement
+        _player.movement.lockMovement = true;
+
+        //
     }
 
     public void MaxHealthUpgrade()
@@ -113,18 +216,32 @@ public class PlayerStats : MonoBehaviour
         AdjustHealth(250);
     }
 
-    void UpdateHealthDisplay()
+    public void MaxSpiritHealthUpgrade()
+    {
+        Debug.Log("Player Got Max Health Upgrade");
+
+        // Increase Player Max Health
+        playerStats.maxSpiritHealth += 250;
+
+        // Limit Player Max Health
+        if (playerStats.maxSpiritHealth > _healthCap)
+            playerStats.maxSpiritHealth = _healthCap;
+
+        AdjustHealth(250);
+    }
+
+    void UpdateHealthDisplay(float currentHealth, float maxHealth)
     {
         // gets current health percent
-        float currentHealthPercent = 100 * (playerStats.health / playerStats.maxHealth);
+        float currentHealthPercent = 100 * (currentHealth / maxHealth);
 
         // sets current value to int
-        int currentHealth = (int)playerStats.health;
+        int currentHealthInt = (int)currentHealth;
         // sets max value to int
-        int currentMaxHealth = (int)playerStats.maxHealth;
+        int currentMaxHealthInt = (int)maxHealth;
 
         // string display for the text display
-        string healthDisplay = currentHealth + "/" + currentMaxHealth;
+        string healthDisplay = currentHealthInt + "/" + currentMaxHealthInt;
 
         _UIManager.healthBar.SetAnimationFrame(currentHealthPercent, healthDisplay);
     }
@@ -179,7 +296,7 @@ public class PlayerStats : MonoBehaviour
     public void AgilityExpIncrease()
     {
         // If Agility Is Not At Max Level
-        if (playerStats.agility < 100)
+        if (!playerStats.dreamState && playerStats.agility < 100)
         {
             // Adds 1 Step Per Player Movement
             _playerStep++;
@@ -251,7 +368,7 @@ public class PlayerStats : MonoBehaviour
     public void StrengthExpIncrease(float exp)
     {
         // If player strength stat is not at max level
-        if (playerStats.strength < 100)
+        if (!playerStats.dreamState &&  playerStats.strength < 100)
         {
             // add exp gained to strength exp
             playerStats.strengthExp += exp;
@@ -338,7 +455,7 @@ public class PlayerStats : MonoBehaviour
     public void IntelligenceExpIncrease(float exp)
     {
         // If player strength stat is not at max level
-        if (playerStats.intelligence < 100)
+        if (!playerStats.dreamState && playerStats.intelligence < 100)
         {
             // add exp gained to strength exp
             playerStats.intelligenceExp += exp;
@@ -402,7 +519,7 @@ public class PlayerStats : MonoBehaviour
 
     public void UpdateAllDisplays()
     {
-        UpdateHealthDisplay();
+        UpdateHealthDisplay(playerStats.health, playerStats.maxHealth);
         UpdateGoldDisplay();
         UpdateAgilityDisplay();
         UpdateStrengthDisplay();

@@ -134,9 +134,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 8868187030210210380}
     m_Modifications:
     - target: {fileID: 1610318386977787331, guid: 2162df4c0efc5234580c93033993eca5, type: 3}
+      propertyPath: _UIManager
+      value: 
+      objectReference: {fileID: 376567628247709826}
+    - target: {fileID: 1610318386977787331, guid: 2162df4c0efc5234580c93033993eca5, type: 3}
       propertyPath: _playerSprite
       value: 
       objectReference: {fileID: 1307960563479492657}
+    - target: {fileID: 1610318386977787331, guid: 2162df4c0efc5234580c93033993eca5, type: 3}
+      propertyPath: playerStats.spiritHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1610318386977787331, guid: 2162df4c0efc5234580c93033993eca5, type: 3}
+      propertyPath: playerStats.maxSpiritHealth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7484868325277662406, guid: 2162df4c0efc5234580c93033993eca5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -203,10 +215,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8868187030210210380}
     m_Modifications:
+    - target: {fileID: 3280561614717825064, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280561614717825064, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3280561614717825064, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4500580294029426096, guid: 999e30845ba08a240b50994160f6a928, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 7124225341536547015, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: healthBarSwitch
+      value: 
+      objectReference: {fileID: 6547320531293625159}
     - target: {fileID: 8996685410274357451, guid: 999e30845ba08a240b50994160f6a928, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -250,10 +278,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2804505645866274628, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6547320531293625159}
   m_SourcePrefab: {fileID: 100100000, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+--- !u!114 &376567628247709826 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7124225341536547015, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+  m_PrefabInstance: {fileID: 7487097424960456773}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b5623ffdbc3842bd1edfc49cb078b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1962767646039816334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8996685410274357451, guid: 999e30845ba08a240b50994160f6a928, type: 3}
   m_PrefabInstance: {fileID: 7487097424960456773}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4687148207907358465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2804505645866274628, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+  m_PrefabInstance: {fileID: 7487097424960456773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6547320531293625159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687148207907358465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ea16ae3f363c8408e71baaf5bff024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normalHealthBar: {r: 1, g: 0, b: 0, a: 1}
+  _spiritHealthBar: {r: 0, g: 1, b: 0.57017446, a: 1}

@@ -16,6 +16,7 @@ public class InputControls : MonoBehaviour
     [SerializeField]
     GameObject _playerSword;
 
+    GameManager _gameManager;
     UI_Manager _UIManager;
 
     public void Awake()
@@ -54,6 +55,7 @@ public class InputControls : MonoBehaviour
 
     private void Start()
     {
+        _gameManager = GameManager.Instance;
         _UIManager = UI_Manager.Instance;
     }
 
@@ -66,12 +68,16 @@ public class InputControls : MonoBehaviour
     {
         Debug.Log("Player Interaction");
 
+        // if game over screen active
+        if (_gameManager.gameOver.activeScreen)
+            _gameManager.GameOver();
+
         // if item obtained description is open will clear item desription
-        if (_UIManager.itemObtained != null)
+        else if (_UIManager.itemObtained != null)
             _UIManager.itemObtained.ClearItemDesription();
 
         // checks if player interaction trigger can interact with something
-        if (_player.interactionTrigger.currentInteractable != PlayerInteractionTrigger.Interactables.none)
+        else if (_player.interactionTrigger.currentInteractable != PlayerInteractionTrigger.Interactables.none)
         {
             // player interacts with interactable
             _player.interactionTrigger.Interact();
@@ -95,6 +101,10 @@ public class InputControls : MonoBehaviour
         // Toggles Menu On and Pauses Game
         if (!_UIManager.menu.activeSelf)
         {
+            // locks player movement while menu open
+            _player.movement.lockMovement = true;
+
+            // opens menu
             _UIManager.menu.SetActive(true);
 
             // small delay before updating displays
@@ -109,7 +119,11 @@ public class InputControls : MonoBehaviour
         // Toggles Menu Off and Unpauses Game
         else
         {
+            // closes menu
             _UIManager.menu.SetActive(false);
+
+            // unlock player movement
+            _player.movement.lockMovement = false;
 
             Debug.Log("Unpause Game");
         }
