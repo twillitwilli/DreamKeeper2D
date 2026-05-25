@@ -77,7 +77,7 @@ public class InputControls : MonoBehaviour
             _UIManager.itemObtained.ClearItemDesription();
 
         // checks if player interaction trigger can interact with something
-        else if (_player.interactionTrigger.currentInteractable != PlayerInteractionTrigger.Interactables.none)
+        else if (_player.interactionTrigger.currentInteractable != null)
         {
             // player interacts with interactable
             _player.interactionTrigger.Interact();

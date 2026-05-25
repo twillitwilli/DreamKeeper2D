@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4297121823729225620}
   - component: {fileID: 8204403668376186370}
   - component: {fileID: 5764446259641958928}
+  - component: {fileID: 8743991962036247045}
   - component: {fileID: 6814402629950825400}
   m_Layer: 0
   m_Name: Normal Chest
@@ -131,6 +132,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.4, y: 2.42}
   m_EdgeRadius: 0
+--- !u!114 &8743991962036247045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904745997011886370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5809dd9f4afdb3248b504f8bc26d88fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfInteraction: 1
 --- !u!114 &6814402629950825400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b862d081f7c2a428ea5c2eb4267a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isLocked: 0
   _renderer: {fileID: 8204403668376186370}
   _openedChestSprite: {fileID: 766821011, guid: 50927f033e2600a46b9e47941c9536fd, type: 3}
   _chestLootPrefab: {fileID: 9167765048091904982, guid: ca4647417b41ac54dba1a4895113f7d7, type: 3}

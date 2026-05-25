@@ -19,6 +19,9 @@ public class GameManager : MonoSingleton<GameManager>
     PlayerController _player;
     LoadScene _sceneLoader;
 
+    public PrefabCollection
+        levelUpIndicators;
+
     private void Start()
     {
         // gets reference to scene loader

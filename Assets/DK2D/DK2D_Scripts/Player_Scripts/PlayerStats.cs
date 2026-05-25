@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    GameManager _gameManager;
+
     bool _playedDead;
 
     [SerializeField]
@@ -38,6 +40,8 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        _gameManager = GameManager.Instance;
+
         // sets players default sprite color
         _playerDefaultColor = _playerSprite.color;
 
@@ -318,27 +322,34 @@ public class PlayerStats : MonoBehaviour
             // Checks to see if the players current agility exp reaches agility level up
             if (playerStats.agilityExp >= _agilityNextLevelUp)
             {
-                Debug.Log("Agility Level Up");
-
-                // resets player agility exp
-                playerStats.agilityExp = 0;
-
-                // increases players agility level by 1
-                playerStats.agility++;
-
-                // increases players movement speed
-                _player.movement.SetPlayerSpeed();
-
-                // increase the exp requirement needed to for next level
-                SetAgilityLevelUpExpReq();
-
-                // Limits players max agility level too 100
-                if (playerStats.agility >= _agilityCap)
-                    playerStats.agility = 100;
+                AgilityLevelUp();
             }
         }
 
-        UpdateAgilityDisplay();
+    }
+
+    void AgilityLevelUp()
+    {
+        Debug.Log("Agility Level Up");
+
+        // spawns in agility level up indicator
+        Instantiate(_gameManager.levelUpIndicators.prefabs[0]);
+
+        // resets player agility exp
+        playerStats.agilityExp = 0;
+
+        // increases players agility level by 1
+        playerStats.agility++;
+
+        // increases players movement speed
+        _player.movement.SetPlayerSpeed();
+
+        // increase the exp requirement needed to for next level
+        SetAgilityLevelUpExpReq();
+
+        // Limits players max agility level too 100
+        if (playerStats.agility >= _agilityCap)
+            playerStats.agility = 100;
     }
 
     void SetAgilityLevelUpExpReq()
@@ -378,34 +389,40 @@ public class PlayerStats : MonoBehaviour
             // if strength exp equals next level up requirement, level up strength
             if (playerStats.strengthExp >= _strengthNextLevelUp)
             {
-                Debug.Log("Strength Level Up");
-
-                // extra exp variable
-                float extraExp = 0;
-
-                // get extra exp to transfer before level up
-                if (playerStats.strengthExp >  _strengthNextLevelUp)
-                    extraExp = playerStats.strengthExp - _strengthNextLevelUp;
-
-                // reset player strength exp
-                playerStats.strengthExp = 0;
-
-                // increase strength level by 1
-                playerStats.strength++;
-
-                // increase requirement for next level up
-                SetStrengthLevelUpExpReq();
-
-                // transfer remaining exp from previous level to new level
-                playerStats.strengthExp += extraExp;
-
-                // limits player max stregth level
-                if (playerStats.strength >= _strengthCap)
-                    playerStats.strength = 100;
+                StrengthLevelUp();
             }
         }
+    }
 
-        UpdateStrengthDisplay();
+    void StrengthLevelUp()
+    {
+        Debug.Log("Strength Level Up");
+
+        // spawns in strength level up indicator
+        Instantiate(_gameManager.levelUpIndicators.prefabs[1]);
+
+        // extra exp variable
+        float extraExp = 0;
+
+        // get extra exp to transfer before level up
+        if (playerStats.strengthExp > _strengthNextLevelUp)
+            extraExp = playerStats.strengthExp - _strengthNextLevelUp;
+
+        // reset player strength exp
+        playerStats.strengthExp = 0;
+
+        // increase strength level by 1
+        playerStats.strength++;
+
+        // increase requirement for next level up
+        SetStrengthLevelUpExpReq();
+
+        // transfer remaining exp from previous level to new level
+        playerStats.strengthExp += extraExp;
+
+        // limits player max stregth level
+        if (playerStats.strength >= _strengthCap)
+            playerStats.strength = 100;
     }
 
     void SetStrengthLevelUpExpReq()
@@ -465,34 +482,40 @@ public class PlayerStats : MonoBehaviour
             // if strength exp equals next level up requirement, level up strength
             if (playerStats.intelligenceExp >= _intelligenceNextLevelUp)
             {
-                Debug.Log("Intelligence Level Up");
-
-                // extra exp variable
-                float extraExp = 0;
-
-                // get extra exp to transfer before level up
-                if (playerStats.intelligenceExp > _intelligenceNextLevelUp)
-                    extraExp = playerStats.intelligenceExp - _intelligenceNextLevelUp;
-
-                // reset player strength exp
-                playerStats.intelligenceExp = 0;
-
-                // increase strength level by 1
-                playerStats.intelligence++;
-
-                // increase requirement for next level up
-                SetIntelligenceLevelUpExpReq();
-
-                // transfer remaining exp from previous level to new level
-                playerStats.intelligenceExp += extraExp;
-
-                // limits player max stregth level
-                if (playerStats.intelligence >= _intelligenceCap)
-                    playerStats.intelligence = 100;
+                IntelligenceLevelUp();
             }
         }
+    }
 
-        UpdateIntelligenceDisplay();
+    void IntelligenceLevelUp()
+    {
+        Debug.Log("Intelligence Level Up");
+
+        // spawns in intelligence level up indicator
+        Instantiate(_gameManager.levelUpIndicators.prefabs[2]);
+
+        // extra exp variable
+        float extraExp = 0;
+
+        // get extra exp to transfer before level up
+        if (playerStats.intelligenceExp > _intelligenceNextLevelUp)
+            extraExp = playerStats.intelligenceExp - _intelligenceNextLevelUp;
+
+        // reset player strength exp
+        playerStats.intelligenceExp = 0;
+
+        // increase strength level by 1
+        playerStats.intelligence++;
+
+        // increase requirement for next level up
+        SetIntelligenceLevelUpExpReq();
+
+        // transfer remaining exp from previous level to new level
+        playerStats.intelligenceExp += extraExp;
+
+        // limits player max stregth level
+        if (playerStats.intelligence >= _intelligenceCap)
+            playerStats.intelligence = 100;
     }
 
     void SetIntelligenceLevelUpExpReq()

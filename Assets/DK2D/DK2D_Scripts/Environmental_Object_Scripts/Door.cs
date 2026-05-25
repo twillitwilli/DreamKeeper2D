@@ -17,7 +17,14 @@ public class Door : MonoBehaviour
     public void OpenDoor(PlayerController player)
     {
         if (doorIsLocked)
+        {
             Debug.Log("Door is locked");
+
+            GameObject lockedPrefab = LockIndicatorPool.Instance.GetItem();
+
+            lockedPrefab.transform.position = transform.position;
+        }
+            
 
         else
         {

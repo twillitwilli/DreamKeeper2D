@@ -5,6 +5,9 @@ using UnityEngine;
 public class TreasureChest : MonoBehaviour
 {
     [SerializeField]
+    bool _isLocked;
+
+    [SerializeField]
     SpriteRenderer _renderer;
 
     [SerializeField]
@@ -15,16 +18,28 @@ public class TreasureChest : MonoBehaviour
 
     public void OpenChest()
     {
-        Debug.Log("Opened Chest");
+        if (!_isLocked)
+        {
+            Debug.Log("Opened Chest");
 
-        // changes the sprite of the chest to the opened sprite chest
-        if (_renderer != null)
-            _renderer.sprite = _openedChestSprite;
+            // changes the sprite of the chest to the opened sprite chest
+            if (_renderer != null)
+                _renderer.sprite = _openedChestSprite;
 
-        if (_chestLootPrefab != null)
-            Instantiate(_chestLootPrefab, transform.position, transform.rotation);
+            if (_chestLootPrefab != null)
+                Instantiate(_chestLootPrefab, transform.position, transform.rotation);
 
-        // removes the chest script from the object
-        Destroy(this);
+            // removes interactable script from object
+            Destroy(GetComponent<Interactable>());
+        }
+
+        else
+        {
+            Debug.Log("Chest Locked");
+
+            GameObject lockedPrefab = LockIndicatorPool.Instance.GetItem();
+
+            lockedPrefab.transform.position = transform.position;
+        }
     }
 }
