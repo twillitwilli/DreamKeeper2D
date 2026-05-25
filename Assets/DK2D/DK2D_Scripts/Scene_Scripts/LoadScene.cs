@@ -14,5 +14,7 @@ public class LoadScene : MonoBehaviour
 
         // check player dream state
         GameManager.Instance.CheckPlayerDreamState();
+
+        PlayerController.Instance.movement.lockMovement = false;
     }
 }

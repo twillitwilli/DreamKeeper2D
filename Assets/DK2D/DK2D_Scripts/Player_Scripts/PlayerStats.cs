@@ -199,7 +199,9 @@ public class PlayerStats : MonoBehaviour
         // locks player movement
         _player.movement.lockMovement = true;
 
-        //
+        //change scene and wake player up
+        playerStats.dreamState = false;
+        GameManager.Instance.ChangePlayerScene();
     }
 
     public void MaxHealthUpgrade()

@@ -8,6 +8,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     GameObject _playerPrefab;
 
+    public SceneSelector.SceneName nextSceneName {  get; set; }
     public int sceneSpawnLocation {  get; set; }
 
     public BinaryPlayerSaveLoad saveSystem;
@@ -40,7 +41,13 @@ public class GameManager : MonoSingleton<GameManager>
 
             // if new player is player, default dream state to true
             if (newPlayer)
+            {
                 _player.stats.playerStats.dreamState = true;
+
+                //sets default refence
+                nextSceneName = SceneSelector.SceneName.NamikVillage;
+                sceneSpawnLocation = 0;
+            }
 
             // sets save system references
             saveSystem.SetReferences();
@@ -64,6 +71,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void CheckPlayerDreamState()
     {
+        // changes player health display from dreaming to normal and vice versa
         _player.stats.SwitchHealthDisplays();
+    }
+
+    public void ChangePlayerScene()
+    {
+        // sets scene to selected scene
+        _sceneLoader.sceneName = nextSceneName;
+
+        // loads scene
+        _sceneLoader.SceneLoader();
     }
 }

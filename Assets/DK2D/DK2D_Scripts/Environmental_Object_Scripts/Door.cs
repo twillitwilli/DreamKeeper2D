@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField]
-    bool _doorIsLocked;
+    public bool doorIsLocked;
 
     [SerializeField]
     Transform _movePlayerToLocation;
@@ -17,7 +16,7 @@ public class Door : MonoBehaviour
 
     public void OpenDoor(PlayerController player)
     {
-        if (_doorIsLocked)
+        if (doorIsLocked)
             Debug.Log("Door is locked");
 
         else
@@ -29,12 +28,6 @@ public class Door : MonoBehaviour
             player.transform.position = _movePlayerToLocation.position;
         }
             
-    }
-
-    public void UnlockDoor()
-    {
-        // unlocks door
-        _doorIsLocked = false;
     }
 
     void RenderObjects()
