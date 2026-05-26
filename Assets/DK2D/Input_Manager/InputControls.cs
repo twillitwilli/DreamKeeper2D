@@ -18,9 +18,13 @@ public class InputControls : MonoBehaviour
 
     GameManager _gameManager;
     UI_Manager _UIManager;
+    PlayerSword _sword;
 
     public void Awake()
     {
+        // set reference to sword
+        _sword = _playerSword.GetComponent<PlayerSword>();
+
         // creates the reference for the Input Action
         controls = new PlayerControls();
 
@@ -31,8 +35,14 @@ public class InputControls : MonoBehaviour
         controls.Player_Inputs.Movement.performed += ctx => movement = ctx.ReadValue<Vector2>();
         controls.Player_Inputs.Movement.canceled += ctx => movement = new Vector2(0, 0);
 
-        // Sword Attack controller
+        // Sword Attacks controller //
         controls.Player_Inputs.SwordAttack.performed += ctx => SwordAttack();
+
+        controls.Player_Inputs.DoubleSlash.performed += ctx => DoubleSlash();
+
+        controls.Player_Inputs.SwordSpin.performed += ctx => SwordSpin();
+
+        controls.Player_Inputs.GroundSlam.performed += ctx => GroundSlam();
 
         // Use Item controller
         controls.Player_Inputs.UseItem.performed += ctx => UseItem();
@@ -89,6 +99,48 @@ public class InputControls : MonoBehaviour
         // if sword isnt active, activates sword
         if (!_playerSword.activeSelf)
             _playerSword.SetActive(true);
+
+        // set sword attack
+        _sword.currentSwordAttack = PlayerSword.SwordAttacks.basic;
+
+        // use sword attack
+        _sword.SwordAttack();
+    }
+
+    void DoubleSlash()
+    {
+        if (!_playerSword.activeSelf)
+            _playerSword.SetActive(true);
+
+        // set sword attack
+        _sword.currentSwordAttack = PlayerSword.SwordAttacks.doubleSlash;
+
+        // use sword attack
+        _sword.SwordAttack();
+    }
+
+    void SwordSpin()
+    {
+        if (!_playerSword.activeSelf)
+            _playerSword.SetActive(true);
+
+        // set sword attack
+        _sword.currentSwordAttack = PlayerSword.SwordAttacks.swordSpin;
+
+        // use sword attack
+        _sword.SwordAttack();
+    }
+
+    void GroundSlam()
+    {
+        if (!_playerSword.activeSelf)
+            _playerSword.SetActive(true);
+
+        // set sword attack
+        _sword.currentSwordAttack = PlayerSword.SwordAttacks.groundSlam;
+
+        // use sword attack
+        _sword.SwordAttack();
     }
 
     void UseItem()

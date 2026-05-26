@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class PlayerSword : MonoBehaviour
 {
+    public enum SwordAttacks
+    {
+        basic,
+        doubleSlash,
+        swordSpin,
+        groundSlam
+    }
+
+    public SwordAttacks currentSwordAttack;
+
     [SerializeField]
     PlayerController _player;
 
     public float damage;
 
+    Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Can hit breakable objects
-        BreakableObject obj;
-        if (collision.TryGetComponent<BreakableObject>(out obj))
-        {
-            // apply damage to object
-            obj.DamageObject(GetSwordDamage());
-        }
-
         TrainingDummy dummy;
         if (collision.TryGetComponent<TrainingDummy>(out dummy))
         {
             // hit training dummy
             dummy.HitDummy(GetSwordDamage());
+        }
+
+        Health health;
+        if (collision.TryGetComponent<Health>(out health))
+        {
+            health.AdjustHealth(GetSwordDamage());
         }
     }
 
@@ -42,5 +57,28 @@ public class PlayerSword : MonoBehaviour
 
         // return overall damage amount
         return overallDamage;
+    }
+
+    public void SwordAttack()
+    {
+        switch (currentSwordAttack)
+        {
+            case SwordAttacks.basic:
+                _animator.Play("SwordSlashBasic");
+                break;
+
+            case SwordAttacks.doubleSlash:
+                _animator.Play("SwordDoubleSlash");
+                break;
+
+            case SwordAttacks.swordSpin:
+                _animator.Play("SwordSpin");
+                break;
+
+            case SwordAttacks.groundSlam:
+                _animator.Play("GroundSlam");
+                break;
+        }
+
     }
 }

@@ -206,6 +206,9 @@ public class PlayerStats : MonoBehaviour
         //change scene and wake player up
         playerStats.dreamState = false;
         GameManager.Instance.ChangePlayerScene();
+
+        // returns player sprite to default color
+        _playerSprite.color = _playerDefaultColor;
     }
 
     public void MaxHealthUpgrade()

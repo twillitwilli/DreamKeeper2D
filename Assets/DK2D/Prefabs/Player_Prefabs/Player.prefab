@@ -113,8 +113,8 @@ Transform:
   m_GameObject: {fileID: 5710023169373940631}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.36972255, w: 0.92914224}
-  m_LocalPosition: {x: 0.72, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.25, y: 1, z: 1}
+  m_LocalPosition: {x: 0.603, y: 0.547, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 171969627954211363}
@@ -161,8 +161,8 @@ SpriteRenderer:
   m_SortingLayerID: 4863357
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.5691823, g: 1, b: 0.9841844, a: 1}
+  m_Sprite: {fileID: -1681313922, guid: c7d907a88f9736c42a82c6cfaae72106, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -182,7 +182,7 @@ Animator:
   m_GameObject: {fileID: 5710023169373940631}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2a7a8b92251c8ae41827a48622b5e505, type: 2}
+  m_Controller: {fileID: 9100000, guid: f8dd1cab2498c85498844b87d48adb2a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -225,18 +225,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.08}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.19999999, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.99, y: 9.77}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.33, y: 8.34}
   m_EdgeRadius: 0
 --- !u!114 &1115167475937548416
 MonoBehaviour:
@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb976bb2302e19428b9b7e9c746c4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSwordAttack: 0
   _player: {fileID: 5271872123799725328}
   damage: 50
 --- !u!1 &6100032816925590475
@@ -413,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9ea21c7517a1443994d9ae2f72b7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentInteractable: 0
+  currentInteractable: {fileID: 0}
 --- !u!1 &6322923882680259399
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +578,7 @@ MonoBehaviour:
   movement: {fileID: 8320173650389655500}
   stats: {fileID: 1610318386977787331}
   interactionTrigger: {fileID: 8913922614757851947}
+  playerCamera: {fileID: 0}
 --- !u!114 &8320173650389655500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,10 +642,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 5271872123799725328}
   _playerSprite: {fileID: 0}
+  _UIManager: {fileID: 0}
   playerStats:
     playerName: Zemmi
+    dreamState: 0
     health: 1000
     maxHealth: 1000
+    spiritHealth: 1
+    maxSpiritHealth: 1
     gold: 0
     maxGold: 1000
     agility: 1
@@ -683,7 +689,7 @@ Transform:
   m_GameObject: {fileID: 8992147542979241325}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -879,7 +885,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.61801344, g: 0.9056604, b: 0.8581641, a: 0.03137255}
+      maxColor: {r: 0.6314272, g: 0.90588236, b: 0.61960787, a: 0.03137255}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -943,7 +949,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1260,7 +1266,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 5000
+    maxNumParticles: 10000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0

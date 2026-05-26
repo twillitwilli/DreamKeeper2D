@@ -8,4 +8,5 @@ public class PlayerController : MonoSingleton<PlayerController>
     public PlayerMovement movement;
     public PlayerStats stats;
     public PlayerInteractionTrigger interactionTrigger;
+    public PlayerCamera playerCamera;
 }

@@ -8,10 +8,14 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField]
     GameObject _playerPrefab;
 
+    public SceneSelector.SceneName currentScene;
+
     public SceneSelector.SceneName nextSceneName {  get; set; }
     public int sceneSpawnLocation {  get; set; }
 
     public BinaryPlayerSaveLoad saveSystem;
+
+    public AudioController audioController;
 
     public GameOverScreen gameOver;
 
@@ -28,7 +32,7 @@ public class GameManager : MonoSingleton<GameManager>
         _sceneLoader = GetComponent<LoadScene>();
     }
 
-    public void SpawnPlayer(bool newPlayer)
+    public void SpawnPlayer(bool newPlayer = false)
     {
         // loads player if not already loaded
         if (_loadedPlayerPrefab == null)

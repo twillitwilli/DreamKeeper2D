@@ -46,15 +46,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SwordAttack"",
-                    ""type"": ""Button"",
-                    ""id"": ""4a62404f-3fb8-48ec-a326-ca13be9d6bab"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""UseItem"",
                     ""type"": ""Button"",
                     ""id"": ""02129395-5537-4158-8367-bb0c11c79ff3"",
@@ -70,6 +61,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwordAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4a62404f-3fb8-48ec-a326-ca13be9d6bab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DoubleSlash"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1aef998-ea79-4b10-9764-30c785beb38b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap(tapDelay=0.65)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwordSpin"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f394af8-4fe3-4bb0-ae64-dae8ae25e8d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap(tapDelay=0.55,tapCount=3)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GroundSlam"",
+                    ""type"": ""Button"",
+                    ""id"": ""c012ffe3-9147-4807-8fe2-0c59eb204535"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap(tapDelay=0.55,tapCount=4)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -164,28 +191,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ec11ee2d-6137-45f1-8c4c-f13138f04886"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwordAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ead19de8-6fd5-461a-a15c-7377e5890fdb"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwordAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f8c0a731-943e-43a6-b558-594e4279239d"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -227,6 +232,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec11ee2d-6137-45f1-8c4c-f13138f04886"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ead19de8-6fd5-461a-a15c-7377e5890fdb"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e85543f6-3bc1-433c-a929-51fffbbaba47"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DoubleSlash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43084a7d-3ac0-40ed-ae58-a2f92c2c848f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DoubleSlash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f462474-0af0-4e87-af82-7f9bd8a92242"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordSpin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b03ede8f-b58c-4d8c-ba54-ec9cc55328ad"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwordSpin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28a133f6-61e5-42c2-8db3-faf5dfeba76e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GroundSlam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bc98e48-69d3-4b53-b3c6-ae16ae39de41"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GroundSlam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -237,9 +330,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Inputs = asset.FindActionMap("Player_Inputs", throwIfNotFound: true);
         m_Player_Inputs_Interact = m_Player_Inputs.FindAction("Interact", throwIfNotFound: true);
         m_Player_Inputs_Movement = m_Player_Inputs.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Inputs_SwordAttack = m_Player_Inputs.FindAction("SwordAttack", throwIfNotFound: true);
         m_Player_Inputs_UseItem = m_Player_Inputs.FindAction("UseItem", throwIfNotFound: true);
         m_Player_Inputs_Menu = m_Player_Inputs.FindAction("Menu", throwIfNotFound: true);
+        m_Player_Inputs_SwordAttack = m_Player_Inputs.FindAction("SwordAttack", throwIfNotFound: true);
+        m_Player_Inputs_DoubleSlash = m_Player_Inputs.FindAction("DoubleSlash", throwIfNotFound: true);
+        m_Player_Inputs_SwordSpin = m_Player_Inputs.FindAction("SwordSpin", throwIfNotFound: true);
+        m_Player_Inputs_GroundSlam = m_Player_Inputs.FindAction("GroundSlam", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -303,18 +399,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayer_InputsActions> m_Player_InputsActionsCallbackInterfaces = new List<IPlayer_InputsActions>();
     private readonly InputAction m_Player_Inputs_Interact;
     private readonly InputAction m_Player_Inputs_Movement;
-    private readonly InputAction m_Player_Inputs_SwordAttack;
     private readonly InputAction m_Player_Inputs_UseItem;
     private readonly InputAction m_Player_Inputs_Menu;
+    private readonly InputAction m_Player_Inputs_SwordAttack;
+    private readonly InputAction m_Player_Inputs_DoubleSlash;
+    private readonly InputAction m_Player_Inputs_SwordSpin;
+    private readonly InputAction m_Player_Inputs_GroundSlam;
     public struct Player_InputsActions
     {
         private @PlayerControls m_Wrapper;
         public Player_InputsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Interact => m_Wrapper.m_Player_Inputs_Interact;
         public InputAction @Movement => m_Wrapper.m_Player_Inputs_Movement;
-        public InputAction @SwordAttack => m_Wrapper.m_Player_Inputs_SwordAttack;
         public InputAction @UseItem => m_Wrapper.m_Player_Inputs_UseItem;
         public InputAction @Menu => m_Wrapper.m_Player_Inputs_Menu;
+        public InputAction @SwordAttack => m_Wrapper.m_Player_Inputs_SwordAttack;
+        public InputAction @DoubleSlash => m_Wrapper.m_Player_Inputs_DoubleSlash;
+        public InputAction @SwordSpin => m_Wrapper.m_Player_Inputs_SwordSpin;
+        public InputAction @GroundSlam => m_Wrapper.m_Player_Inputs_GroundSlam;
         public InputActionMap Get() { return m_Wrapper.m_Player_Inputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -330,15 +432,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @SwordAttack.started += instance.OnSwordAttack;
-            @SwordAttack.performed += instance.OnSwordAttack;
-            @SwordAttack.canceled += instance.OnSwordAttack;
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
             @Menu.started += instance.OnMenu;
             @Menu.performed += instance.OnMenu;
             @Menu.canceled += instance.OnMenu;
+            @SwordAttack.started += instance.OnSwordAttack;
+            @SwordAttack.performed += instance.OnSwordAttack;
+            @SwordAttack.canceled += instance.OnSwordAttack;
+            @DoubleSlash.started += instance.OnDoubleSlash;
+            @DoubleSlash.performed += instance.OnDoubleSlash;
+            @DoubleSlash.canceled += instance.OnDoubleSlash;
+            @SwordSpin.started += instance.OnSwordSpin;
+            @SwordSpin.performed += instance.OnSwordSpin;
+            @SwordSpin.canceled += instance.OnSwordSpin;
+            @GroundSlam.started += instance.OnGroundSlam;
+            @GroundSlam.performed += instance.OnGroundSlam;
+            @GroundSlam.canceled += instance.OnGroundSlam;
         }
 
         private void UnregisterCallbacks(IPlayer_InputsActions instance)
@@ -349,15 +460,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @SwordAttack.started -= instance.OnSwordAttack;
-            @SwordAttack.performed -= instance.OnSwordAttack;
-            @SwordAttack.canceled -= instance.OnSwordAttack;
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
             @Menu.started -= instance.OnMenu;
             @Menu.performed -= instance.OnMenu;
             @Menu.canceled -= instance.OnMenu;
+            @SwordAttack.started -= instance.OnSwordAttack;
+            @SwordAttack.performed -= instance.OnSwordAttack;
+            @SwordAttack.canceled -= instance.OnSwordAttack;
+            @DoubleSlash.started -= instance.OnDoubleSlash;
+            @DoubleSlash.performed -= instance.OnDoubleSlash;
+            @DoubleSlash.canceled -= instance.OnDoubleSlash;
+            @SwordSpin.started -= instance.OnSwordSpin;
+            @SwordSpin.performed -= instance.OnSwordSpin;
+            @SwordSpin.canceled -= instance.OnSwordSpin;
+            @GroundSlam.started -= instance.OnGroundSlam;
+            @GroundSlam.performed -= instance.OnGroundSlam;
+            @GroundSlam.canceled -= instance.OnGroundSlam;
         }
 
         public void RemoveCallbacks(IPlayer_InputsActions instance)
@@ -379,8 +499,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnInteract(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnSwordAttack(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnSwordAttack(InputAction.CallbackContext context);
+        void OnDoubleSlash(InputAction.CallbackContext context);
+        void OnSwordSpin(InputAction.CallbackContext context);
+        void OnGroundSlam(InputAction.CallbackContext context);
     }
 }
