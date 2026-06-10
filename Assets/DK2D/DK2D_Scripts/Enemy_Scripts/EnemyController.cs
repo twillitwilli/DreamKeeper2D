@@ -16,8 +16,7 @@ public class EnemyController : MonoBehaviour
         chasing,
         attacking,
         wandering,
-        teleporting,
-        specificMovementPoints
+        teleporting
     }
 
     public EnemyState currentState;
@@ -124,10 +123,6 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case EnemyState.teleporting:
-
-                    break;
-
-                case EnemyState.specificMovementPoints:
 
                     break;
             }

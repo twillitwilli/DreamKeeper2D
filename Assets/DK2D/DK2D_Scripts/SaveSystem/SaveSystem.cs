@@ -10,6 +10,9 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
     PlayerStats _playerStats;
     PlayerStatsData _statsData;
 
+    public Unlockables mainItemUnlocks;
+    public ChestController chestController;
+
     public void SetReferences()
     {
         // Game Manager reference
@@ -55,6 +58,8 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
 
         // Sets player stats data
         newData.playerStats = _statsData;
+        newData.mainItemUnlocks = mainItemUnlocks;
+        //newData.chestUnlocks = chestController
 
         return newData;
     }

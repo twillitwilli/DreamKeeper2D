@@ -8,4 +8,7 @@ public class BinarySaveData
     public int saveFile;
 
     public PlayerStatsData playerStats;
+    public Unlockables 
+        mainItemUnlocks,
+        chestUnlocks;
 }

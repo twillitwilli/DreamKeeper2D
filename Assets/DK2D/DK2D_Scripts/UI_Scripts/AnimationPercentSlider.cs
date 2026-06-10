@@ -11,6 +11,7 @@ public class AnimationPercentSlider : MonoBehaviour
 
     private void Start()
     {
+        // gets reference to the animator
         _animator = GetComponent<Animator>();
 
         // Freezes animator so it stays on that frame
@@ -19,9 +20,11 @@ public class AnimationPercentSlider : MonoBehaviour
 
     public void SetAnimationFrame(float percent, string displayText = "No Text Found")
     {
+        // if animator doesnt exist, it will get the refernce
         if (_animator == null)
             _animator = GetComponent<Animator>();
 
+        // if animator isnt enabled, dont run the rest of the script
         if (!_animator.enabled)
             return;
 
@@ -34,12 +37,8 @@ public class AnimationPercentSlider : MonoBehaviour
         // Freezes animator so it stays on that frame
         _animator.speed = 0;
 
+        // if there is a text component, change the text display
         if (text != null)
-            ChangeDisplayText(displayText);
-    }
-
-    void ChangeDisplayText(string displayText)
-    {
-        text.text = displayText;
+            text.text = displayText;
     }
 }

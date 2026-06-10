@@ -211,9 +211,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8868187030210210380}
     m_Modifications:
+    - target: {fileID: 2879283798452121802, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3969531127441519781, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4500580294029426096, guid: 999e30845ba08a240b50994160f6a928, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645387229180727296, guid: 999e30845ba08a240b50994160f6a928, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8996685410274357451, guid: 999e30845ba08a240b50994160f6a928, type: 3}
       propertyPath: m_LocalPosition.x
