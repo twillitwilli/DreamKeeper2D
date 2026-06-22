@@ -7,7 +7,7 @@ public class PlayerInteractionTrigger : MonoBehaviour
 {
     PlayerController _player;
 
-    public Interactable currentInteractable;
+    public Interactable currentInteractable {  get; private set; }
 
     private void Start()
     {

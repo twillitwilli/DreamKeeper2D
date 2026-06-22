@@ -58,7 +58,11 @@ public class BinaryPlayerSaveLoad : MonoBehaviour
 
         // Sets player stats data
         newData.playerStats = _statsData;
+
+        // sets unlock data
         newData.mainItemUnlocks = mainItemUnlocks;
+
+        // sets chest unlock data
         //newData.chestUnlocks = chestController
 
         return newData;
